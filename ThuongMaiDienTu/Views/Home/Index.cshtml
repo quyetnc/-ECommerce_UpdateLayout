@@ -1,0 +1,265 @@
+﻿@using ThuongMaiDienTu.Helper;
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=129134231769819&autoLogAppEvents=1" nonce="ngCFkUyB"></script>
+
+
+
+<header>
+    <div class="carousel" data-count="3" data-current="1">
+
+        <div class="items">
+            <button class="btn btn-control" data-direction="right"> <i class="ion-ios-arrow-right"></i></button>
+            <button class="btn btn-control" data-direction="left"> <i class="ion-ios-arrow-left"></i></button>
+            <div class="item center" data-marker="1">
+                <img src="~/assetsHome/assets/img/carousel/bckg-2.jpg" alt="Background" class="background hidden-xs hidden-sm" />
+                <img src="~/assetsHome/assets/img/carousel/bckg-2-sm.jpg" alt="Background" class="background visible-sm" />
+                <img src="~/assetsHome/assets/img/carousel/bckg-2-xs.jpg" alt="Background" class="background visible-xs" />
+
+                <div class="content">
+                    <div class="outside-content">
+                        <div class="inside-content">
+                            <div class="container align-right">
+
+                                <h1 class="h3 colorful blue hidden-xs">Provide lightweight and powerull</h1>
+
+                                <hr class="offset-sm">
+                                <h2 class="h1 lg upp colorful blue">New amazing <br> laptops</h2>
+                                <hr class="offset-md">
+                                <hr class="offset-md">
+                                <a href="./store/" rel="nofollow" class="btn btn-primary btn-lg black"> More laptops </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item" data-marker="2">
+                <img src="~/assetsHome/assets/img/carousel/bckg-1.jpg" alt="Background" class="background hidden-xs hidden-sm" />
+                <img src="~/assetsHome/assets/img/carousel/bckg-1-sm.jpg" alt="Background" class="background visible-sm" />
+                <img src="~/assetsHome/assets/img/carousel/bckg-1-xs.jpg" alt="Background" class="background visible-xs" />
+
+                <!-- <img src="assets/img/carousel/newlaptops.jpg" alt="New laptops" title="New laptops" class="item-left hidden-xs"/> -->
+
+                <div class="content">
+                    <div class="outside-content">
+                        <div class="inside-content">
+                            <div class="container">
+
+                                <h1 class="h3 colorful blue hidden-xs">Device is designed for the creative people</h1>
+                                <hr class="offset-sm">
+
+                                <h2 class="h1 lg upp colorful blue">Apple <br> iMac 27 Retina</h2>
+                                <hr class="offset-md">
+                                <hr class="offset-md">
+                                <a href="./store/" rel="nofollow" class="btn btn-primary btn-lg black"> View products </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item" data-marker="3">
+                <img src="~/assetsHome/assets/img/carousel/bckg-3.jpg" alt="Background" class="background hidden-xs hidden-sm" />
+                <img src="~/assetsHome/assets/img/carousel/bckg-3-sm.jpg" alt="Background" class="background visible-sm" />
+                <img src="~/assetsHome/assets/img/carousel/bckg-3-xs.jpg" alt="Background" class="background visible-xs" />
+
+                <!-- <img src="assets/img/carousel/ipadair2.jpg" alt="Apple Devices" title="Apple Devices" class="item-right hidden-xs"/> -->
+
+                <div class="content">
+                    <div class="outside-content">
+                        <div class="inside-content">
+                            <div class="container align-right">
+
+                                <h1 class="h3 colorful blue hidden-xs">Luxury watches, business tablets and 3D touch: <br> How Apple plans to stay ahead in mobile.</h1>
+
+                                <hr class="offset-sm">
+                                <h2 class="h1 lg upp colorful blue">Brand new day <br class="hidden-xs"> for business</h2>
+                                <hr class="offset-md">
+                                <hr class="offset-md">
+                                <a href="./blog/" rel="nofollow" class="btn btn-primary btn-lg black"> View article </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="markers">
+            <li data-marker="1" data-style="white" class="active"></li>
+            <li data-marker="2" data-style="white"></li>
+            <li data-marker="3" data-style="white"></li>
+        </ul>
+
+    </div>
+</header>
+<hr class="offset-lg">
+<hr class="offset-lg">
+
+@*<div class="bars">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 no-padding padding-xs">
+                    <div class="bar medium" data-background="~/assetsHome/assets/img/bars/macbook.jpg">
+                        <h3 class="title black">MacBook Air</h3>
+
+                        <div class="wrapper">
+                            <div class="content">
+                                <hr class="offset-sm">
+                                <a href="./store/" rel="nofollow" class="btn btn-default black"> Buy now </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="bar small" data-background="~/assetsHome/assets/img/bars/accessories.jpg">
+                        <h3 class="title black">Dell Inspirion 7000</h3>
+
+                        <div class="wrapper">
+                            <div class="content">
+                                <hr class="offset-sm">
+                                <a href="./store/" rel="nofollow" class="btn btn-primary black"> Buy now </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="offset-xs">
+                    <hr class="offset-xs">
+
+                    <div class="bar small" data-background="~/assetsHome/assets/img/bars/surfacestudio.jpg">
+                        <h3 class="title">Surface Studio</h3>
+
+                        <div class="wrapper">
+                            <div class="content">
+                                <hr class="offset-sm">
+                                <a href="./store/" rel="nofollow" class="btn btn-primary black"> Buy now </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 no-padding hidden-xs hidden-sm">
+                    <div class="bar medium" data-background="~/assetsHome/assets/img/bars/accessories.jpg">
+                        <h3 class="title black">Accessories</h3>
+
+                        <div class="wrapper">
+                            <div class="content">
+                                <hr class="offset-sm">
+                                <a href="./store/" rel="nofollow" class="btn btn-primary black"> Buy now </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+<hr class="offset-lg">
+<form>
+    Name: (required) <input id="field" name="field">
+    <div id='recaptcha' class="g-recaptcha"
+         data-sitekey="6LeK098ZAAAAAIICDQO8296xd7zCTQcuhy1XB6gS"
+         data-callback="onSubmit"
+         data-size="invisible"></div>
+    <button id='submit'>submit</button>
+</form>
+<script>onload();</script>
+<hr class="offset-md">
+
+@using (THUONGMAIDIENTUEntities db = new THUONGMAIDIENTUEntities())
+{
+    foreach (var category in db.CATEGORY_PRODUCT.ToList())
+    {
+        string link = "/dtdd/" + RemoveVietnamese.RemoveSign4VietnameseString(category.CategoryName).Replace(" ", "-") + "-" + category.IdCategory;
+
+        <section class="products">
+            <div class="container">
+                <h2 class="h2 upp align-center">  @category.CategoryName </h2>
+                <hr class="offset-lg">
+
+                <div class="row">
+
+
+                    @foreach (var product in db.PRODUCTs.Where(p => p.IdCategory == category.IdCategory).ToList())
+                    {
+                        try
+                        {
+
+                            string linkProduct = "/" + RemoveVietnamese.RemoveSign4VietnameseString(@product.ProductName).Replace(" ", "-") + "-" + product.IdProduct;
+
+                            <div class="col-sm-6 col-md-3 product">
+                                <div class="body">
+                                    <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
+                                    <a href="@linkProduct">
+                                        <div style="height : 350px;align-items:center; justify-content:center; align-self:center">
+                                            <img src="~/img/product/@product.PRODUCT_IMG.FirstOrDefault().Filename" alt="Apple iMac 27 Retina" />
+                                        </div>
+                                    </a>
+
+                                    <div class="content align-center">
+                                        <p class="price">$@product.ProductPrice</p>
+                                        <h2 class="h3">@product.ProductName</h2>
+                                        <hr class="offset-sm">
+
+                                        <button class="btn btn-link"> <a href="@linkProduct"> <i class="ion-android-open"></i> Details </a></button>
+                                        <button class="btn btn-primary btn-sm rounded" onclick="AddCart(@product.IdProduct)"> <i class="ion-bag"></i> Add to cart</button>
+                                        <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
+                                        <button class="g-recaptcha"
+                                                data-sitekey="6Ldw0d8ZAAAAAJyc8nETMFPTuw0uJ_FOIu7hHzUk"
+                                                data-callback='onSubmit'
+                                                data-action='submit'>
+                                            Submit
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>}
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+                </div>
+
+                <div class="align-right align-center-xs">
+                    <hr class="offset-sm">
+                    <a href="@link"> <h5 class="upp">View all @category.CategoryName </h5> </a>
+                </div>
+            </div>
+        </section>}
+}
+
+<script type="text/javascript">
+    @*function BuyNow() {
+     $.ajax({
+            url: '/Ajax/AddCart/@Model.IdProduct',
+            type: 'GET',
+            dataType: 'text'
+     }).done(function (ketqua) {
+           location.href = "/Cart";
+                return;
+        });
+
+    }*@
+
+    function AddCart(IDProduct) {
+
+        $.ajax({
+            url: '/Ajax/AddCart/' + IDProduct,
+            type: 'GET',
+            dataType: 'text'
+     }).done(function (ketqua) {
+            var json = JSON.parse(ketqua);
+            if (json.Success == "1") {
+                alert("Thêm vào giỏ hàng thành công");
+                location.reload();
+                $('.cart').css({ 'opacity': '1' });
+                $("#SoLuongGioHang").html(json.Message);
+                return;
+            }
+            alert(json.Message);
+        });
+    }
+</script>

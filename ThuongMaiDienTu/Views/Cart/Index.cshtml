@@ -1,0 +1,286 @@
+﻿
+@{ int soLuongGioHang = Session["cart"] == null ? 0 : ((List<PRODUCT>)Session["cart"]).Count();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int tongTien = 0; }
+<style>
+    .btn-outline-primary a {
+        color: #5bc0de !important;
+    }
+</style>
+<link href="~/Content/Gio-hang.css" rel="stylesheet" />
+<br />
+@if (soLuongGioHang > 0)
+{
+
+    <hr class="offset-top">
+    <div class="white">
+        <div class="container checkout">
+            <h1 style="text-align:center">CHECKOUT ORDER</h1>
+            <hr class="offset-sm">
+        </div>
+    </div>
+    <hr class="offset-md">
+
+    <div class="container checkout">
+        <form action="#" method="post" id="formPayment">
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="row group">
+                        <div class="col-sm-4"><h2 class="h4">Phone</h2></div>
+                        <div class="col-sm-8"> <input type="number" class="form-control" name="CustomerPhone" placeholder="Số Điện Thoại..." onchange="GetCustomer()" /></div>
+                    </div>
+
+                    <div class="row group">
+                        <div class="col-sm-4"><h2 class="h4">Name</h2></div>
+                        <div class="col-sm-8"> <input type="text" class="form-control"id="CustomerName" name="CustomerName" placeholder="Nhập tên...."  /></div>
+                    </div>
+
+
+
+                    <div class="row group">
+                        <div class="col-sm-4"><h2 class="h4">E-mail</h2></div>
+                        <div class="col-sm-8"> <input type="email" class="form-control" id="CustomerEmail" name="CustomerEmail" placeholder="Email..."  /></div>
+                    </div>
+
+                    <div class="row group">
+                        <div class="col-sm-4"><h2 class="h4">Address</h2></div>
+                        <div class="col-sm-8"> <input type="text" class="form-control" id="CustomerAddress" name="CustomerAddress" placeholder="Địa chỉ.."  /></div>
+                    </div>
+
+                    <div class="row group">
+                        <div class="col-sm-4"><h2 class="h4">Note</h2></div>
+                        <div class="col-sm-8"> <input type="text" class="form-control" name="CustomerComment" placeholder="Yêu cầu khác.."  /></div>
+                    </div>
+
+                    <div class="row group">
+                        <div class="col-sm-4"><h2 class="h4">Giftcode</h2></div>
+                        <div class="col-sm-8"> <input type="text" class="form-control" name="Giftcode" placeholder="Nhập mã giảm giá của bạn vào đây nếu có" /></div>
+                    </div>
+
+                    @*<div class="row group">
+                            <div class="col-sm-4"><h2 class="h4">Payment</h2></div>
+                            <div class="col-sm-8">
+                                <div class="group-select justify" tabindex='1'>
+                                    <input class="form-control select" id="payment" name="payment" value="Cash on Delivery" placeholder="" />
+
+                                    <ul class="dropdown">
+                                        <li data-value="Cash on Delivery">Cash on Delivery</li>
+                                        <li data-value="Credit Card">Credit Card</li>
+                                        <li data-value="Paypall">Paypall</li>
+                                    </ul>
+
+                                    <div class="arrow bold"><i class="ion-chevron-down"></i></div>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    <hr class="offset-lg visible-xs visible-sm">
+                    <hr class="offset-lg visible-xs">
+                </div>
+
+                <div class="col-md-5 white">
+                    <hr class="offset-md visible-xs visible-sm">
+                    <div class="checkout-cart">
+                        <div class="content">
+
+
+                            @using (THUONGMAIDIENTUEntities db = new THUONGMAIDIENTUEntities())
+                            {
+                                foreach (var product in ((List<PRODUCT>
+                                    )Session["cart"]))
+                                {
+                                    var item = db.PRODUCTs.Where(x => x.IdProduct == product.IdProduct).FirstOrDefault();
+                                    tongTien += (int)item.ProductPrice;
+
+
+
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object" src="~/img/product/@item.PRODUCT_IMG.FirstOrDefault().Filename" alt="HP@item.ProductName" />
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h2 class="h4 media-heading">@item.ProductName</h2>
+                                            <label>Tablets</label>
+                                            <p class="price">$@item.ProductPrice</p>
+                                        </div>
+                                        <div class="controls">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default btn-sm" onclick="EditCart(@product.IdProduct,'DOWN')" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
+                                                </span>
+                                                <input type="text" class="form-control input-sm" placeholder="Qty" value="@product.Quantily" readonly="">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default btn-sm" onclick="EditCart(@product.IdProduct,'UP')" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
+                                                </span>
+                                            </div><!-- /input-group -->
+
+                                            <a onclick="RemoveCart(@item.IdProduct)"> <i class="ion-trash-b"></i> Remove </a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                    <hr class="offset-md visible-xs visible-sm">
+                </div>
+
+                <hr class="offset-lg hidden-xs">
+
+                <div class="col-sm-12 white">
+                    <hr class="offset-md">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-4">
+                         
+                            <h3 class="h5 no-margin">Total: $@String.Format("{0:N0}", tongTien)</h3>
+                            <h3 class="h5 no-margin">Promo: $@String.Format("{0:N0}", tongTien)</h3>
+                            <h3 class="h4 no-margin">Total Payment: $@String.Format("{0:N0}", tongTien)</h3>
+                        </div>
+                        <div class="col-md-4 hidden-xs">
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <input name="PaymentMethod" id="PaymentMethod" hidden />
+                            <input name="BankCode" id="BankCode" hidden />
+                            <button class="btn btn-primary pull-right" onclick="Payment(1)" type="button">Confirm order</button>
+                            <button class="btn btn-primary pull-right" type="button" onclick="Payment(2)">Thanh Toán Online</button>
+                        </div>
+                    </div>
+                    <hr class="offset-md">
+                </div>
+
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <img src="~/img/product/empty-cart.png" class="img-cart-empty" width="100%">
+                    <a class="btn btn-outline-primary btn-block" role="button" href="/">Quay về mua hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>}
+
+
+
+<div id="create-category-model" class="modal fade create-category-md" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thanh toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                @{ string listBank = "VIETCOMBANK,VIETINBANK,BIDV,AGRIBANK,SACOMBANK,TECHCOMBANK,ACB,VPBANK,DONGABANK,EXIMBANK,TPBANK,NCB,OJB,MSBANK,HDBANK,NAMABANK,OCB,VISA,MASTERCARD,JCB,VNMART,SCB,IVB,ABBANK,SHB,VIB,VNPAYQR,VIETCAPITALBANK,PVCOMBANK,SAIGONBANK,MBBANK,BACABANK,UPI";
+                    string[] dsBank = listBank.Split(',');
+                    foreach (var bank in dsBank)
+                    {
+                        <div class="col-3">
+                            <img style="cursor: pointer" width="100%" src="~/img/bank/@(bank).png" onclick="ChooseBank('@bank')" />
+                        </div> } }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function GetCustomer() {
+        var phone = $("[name='CustomerPhone']").val();
+        if (phone == '') 
+           return;
+        $.ajax({
+            url: '/Ajax/GetCustomer?phone=' + phone,
+            type: 'GET',
+            dataType: 'text'
+        }).done(function (ketqua) {
+            //if (ketqua == null) return;
+            try {
+                if (ketqua == "" || ketqua == null) {
+                    $("#CustomerName").prop("disabled", false);
+                    $("#CustomerEmail").prop("disabled", false);
+                    $("#CustomerAddress").prop("disabled", false);
+                } else {
+                    var json = JSON.parse(ketqua);
+                    $("#CustomerName").val(json.Name);
+                    $("#CustomerName").prop("disabled", true);
+                    $("#CustomerEmail").val(json.Email);
+                    $("#CustomerEmail").prop("disabled", true);
+                    $("#CustomerEmail").val(json.Address);
+                    $("#CustomerAddress").prop("disabled", true);
+
+
+                }
+            }
+            catch (ex) {
+                console.log(ex)
+            }
+          
+         
+        });
+
+    }
+
+    function ChooseBank(id) {
+        $("#BankCode").val(id);
+        $("#formPayment").submit();
+    }
+
+    function Payment(id) {
+        alert(id)
+        $("#PaymentMethod").val(id);
+        if (id == 2) {
+            $('#create-category-model').modal('show');
+            return;
+        }
+        $("#formPayment").submit();
+    }
+
+    function RemoveCart(id) {
+        $.ajax({
+            url: '/Ajax/RemoveCart/' + id,
+            type: 'GET',
+            dataType: 'text'
+        }).done(function (ketqua) {
+            var json = JSON.parse(ketqua);
+            if (json.Success == "1") {
+                location.reload();
+                return;
+            }
+            alert(json.Message);
+        });
+    }
+
+    function EditCart(id, type) {
+        var idValue = id;
+        var typeValue = type;
+        $.ajax({
+            url: '/Ajax/EditCart/',
+            type: 'POST',
+            dataType: 'text',
+            data: {
+                idProduct: idValue,
+                type: typeValue
+            }
+        }).done(function (ketqua) {
+            var json = JSON.parse(ketqua);
+            if (json.Success == "1") {
+                location.reload();
+                return;
+            }
+            alert(json.Message);
+        });
+    }
+</script>

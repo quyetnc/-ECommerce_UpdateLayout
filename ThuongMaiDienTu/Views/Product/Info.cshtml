@@ -1,0 +1,188 @@
+﻿@model ThuongMaiDienTu.PRODUCT
+
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<link href="~/assetsHome/assets/css/carousel-product.css" rel="stylesheet" />
+<link href="~/assetsHome/assets/css/custom.css" rel="stylesheet" />
+<link href="~/assetsHome/assets/ionicons-2.0.1/css/ionicons.css" rel="stylesheet" />
+
+<hr class="offset-lg">
+<hr class="offset-lg">
+<hr class="offset-lg hidden-xs">
+<style>
+    .info-detail {
+        
+      background-color: white;
+      padding: 30px;
+        
+    }
+
+    .products-detail {
+        background-color: white
+    }
+</style>
+<section class="product">
+    @using (THUONGMAIDIENTUEntities db = new THUONGMAIDIENTUEntities())
+    {
+        var product = db.PRODUCTs.Where(x => x.IdProduct == Model.IdProduct).FirstOrDefault();
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7 col-md-7 no-padding">
+
+            <div class="caption">
+
+                <img src="~/img/product/@product.PRODUCT_IMG.FirstOrDefault().Filename" alt="@product.PRODUCT_IMG.FirstOrDefault().ImgAlt" width="250" />
+
+                <h1>@product.ProductName</h1>
+
+                <p> &middot; OS Windows™ 10</p>
+                <p> &middot; 28 Inch PixelSense™ Display</p>
+                <p> &middot; Intel Core i5/i7</p>
+                <hr class="offset-md hidden-sm">
+                <hr class="offset-sm visible-sm">
+                <hr class="offset-xs visible-sm">
+
+                <p class="price">$@String.Format("{0:0,0}", product.ProductPrice)</p>
+
+                <hr class="offset-md">
+
+                <button class="btn btn-primary rounded" type="button" onclick="AddCart()"> <i class="ion-bag"></i> Add to cart</button>
+                <button class="btn btn-link" type="button" onclick="BuyNow()"> <i class="ion-ios-heart"></i> Buy Now </button>
+
+
+                <h2>@product.ProductName</h2>
+
+                <p>
+                    @product.ProductSumary
+                </p>
+                <br />
+
+            </div>
+            <br />
+
+        </div>
+
+        <div class="col-sm-5 col-md-5 white no-padding-xs ">
+            <h2>Thông tin cấu hình</h2>
+            <br>
+
+            <table class="table table-striped">
+                <tbody>
+                    @{ int i = 0;
+                        string tieude = "";
+                        foreach (var info in db.INFOes.OrderBy(x => x.InfoCategory).ToList())
+                        {
+                            string thongtin = "";
+                            int maSP = Model.IdProduct;
+                            var thongtinDB = db.PRODUCT_INFO.Where(x => x.IdInfo == info.IdInfo && x.IdProduct == maSP).FirstOrDefault();
+                            if (thongtinDB != null)
+                            {
+                                thongtin = thongtinDB.Info;
+                            }
+                            if (String.IsNullOrEmpty(thongtin))
+                            {
+                                continue;
+                            }
+                            if (!tieude.Equals(info.InfoCategory))
+                            {
+                                tieude = info.InfoCategory;
+
+        <tr>
+            <td colspan="2"><b>@tieude</b></td>
+        </tr> }
+        <tr>
+            <td>@info.InfoName</td>
+            <td>
+                @thongtin
+            </td>
+        </tr> i++;
+                        } }
+                </tbody>
+            </table>
+            <hr class="offset-lg">
+            @*<div class="carousel-product" data-count="4" data-current="1">
+
+                    <div class="items">
+                        <button class="btn btn-control" data-direction="right"> <i class="ion-ios-arrow-right"></i></button>
+                        <button class="btn btn-control" data-direction="left"> <i class="ion-ios-arrow-left"></i></button>
+                        @{ string sActive = "active"; }
+
+                        @foreach (var item in product.PRODUCT_IMG.ToList())
+                        {
+                    <div class="item center  @sActive">
+                        <img src="~/img/product/@item.Filename" alt="@item.ImgAlt" class="background" />
+                    </div>}
+                        <div class="item" data-marker="4">
+                            <img src="../assets/img/product/video.jpg" alt="Microsoft Surface Studio" class="background" />
+
+                            <div class="tiles">
+                                <a href="#video" data-gallery="#video" data-source="youtube" data-id="BzMLA8YIgG0">
+                                    <img src="../assets/img/product/video.jpg" alt="Surface Studio">
+
+                                    <div class="overlay"></div>
+                                    <div class="content">
+                                        <div class="content-outside">
+                                            <div class="content-inside">
+                                                <i class="ion-ios-play"></i>
+                                                <h2 class="white hidden-xs">Introducing Microsoft <br> Surface Studio</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+
+    </div>
+    <hr class="offset-sm hidden-xs">
+
+
+</div>}
+</section>
+
+
+<hr class="offset-lg">
+
+<div class="container" style="">
+    <h2>Mô tả sản phẩm</h2>
+    <div class="info-detail">
+
+
+        @Html.Raw(Model.ProductDetail)
+    </div>
+
+</div>
+
+
+<script>
+        function BuyNow() {
+         $.ajax({
+                url: '/Ajax/AddCart/@Model.IdProduct',
+                type: 'GET',
+                dataType: 'text'
+         }).done(function (ketqua) {
+               location.href = "/Cart";
+             return;
+             location.reload();
+            });
+
+        }
+
+        function AddCart() {
+                 $.ajax({
+                url: '/Ajax/AddCart/@Model.IdProduct',
+                type: 'GET',
+                dataType: 'text'
+         }).done(function (ketqua) {
+                var json = JSON.parse(ketqua);
+                if (json.Success == "1") {
+                    alert("Thêm vào giỏ hàng thành công");
+                    $("#SoLuongGioHang").html(json.Message);
+                    return;
+                }
+                alert(json.Message);
+            });
+        }
+</script>
